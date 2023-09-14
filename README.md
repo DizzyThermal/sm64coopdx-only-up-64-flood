@@ -2,6 +2,8 @@
 
 * Note: This is NOT the [Only Up 64 Map](https://github.com/DizzyThermal/sm64ex-coop-only-up-64), this is Flood Mod for Only Up 64
 
+[Areas 1-8 on **Hard Mode**](https://www.twitch.tv/collections/97Z5GvWhhBf8sg)
+
 ## What is Flood Mod?
 
 * Flood Mod is a game mode by Agent X - Climb to the top as the area floods!
