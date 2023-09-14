@@ -4,9 +4,9 @@
 
 ## What is Flood Mod?
 
-* Flood Mod is a game mode by Agent X:
+* Flood Mod is a game mode by Agent X - Climb to the top as the area floods!
 
-[![Only Up 64](https://img.youtube.com/vi/tdBLiADQjYo/0.jpg)](https://www.youtube.com/watch?v=tdBLiADQjYo)
+[![Only Up 64 Flood](https://img.youtube.com/vi/hP6ghR_GRwo/0.jpg)](https://www.youtube.com/watch?v=hP6ghR_GRwo)
 
 https://github.com/Agent-11/agent-ex-coop-mods/tree/main/mods/flood
 
