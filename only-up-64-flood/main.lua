@@ -50,8 +50,16 @@ end
 
 -- runs serverside
 local function round_start()
+    for i = 0, MAX_PLAYERS - 1 do
+        if gNetworkPlayers[i].connected then
+            gPlayerSyncTable[i].finished = false
+            mario_set_full_health(gMarioStates[i])
+        end
+    end
     gGlobalSyncTable.roundState = ROUND_STATE_ACTIVE
-    gGlobalSyncTable.timer = if_then_else(gGlobalSyncTable.level == LEVEL_CTT or (gGlobalSyncTable.level == LEVEL_RR and game == GAME_STAR_ROAD), 730, 100)
+    gGlobalSyncTable.timer = if_then_else(gGlobalSyncTable.level == LEVEL_CTT
+      or (gGlobalSyncTable.level == LEVEL_RR and game == GAME_STAR_ROAD)
+      or game == GAME_ONLY_UP_64, 730, 100)
 end
 
 -- runs serverside
@@ -251,8 +259,10 @@ end
 local function mario_update(m)
     if not gNetworkPlayers[m.playerIndex].connected then return end
 
-    if m.health > 0xff then
+    if m.health > 0xff and not gPlayerSyncTable[m.playerIndex].finished then
         network_player_set_description(gNetworkPlayers[m.playerIndex], "Alive", 75, 255, 75, 255)
+    elseif m.health > 0xff then
+        network_player_set_description(gNetworkPlayers[m.playerIndex], "Finished", 75, 255, 75, 255)
     else
         network_player_set_description(gNetworkPlayers[m.playerIndex], "Dead", 255, 75, 75, 255)
     end
@@ -325,7 +335,7 @@ local function mario_update(m)
     -- update spectator if finished, manage other things if not
     if gPlayerSyncTable[0].finished then
         mario_set_full_health(m)
-        if network_player_connected_count() > 1 and m.action ~= ACT_JUMBO_STAR_CUTSCENE then
+        if network_player_connected_count() > 1 and m.action ~= ACT_JUMBO_STAR_CUTSCENE and m.action ~= ACT_SPECTATOR then
             set_mario_spectator(m)
         end
     else
@@ -337,13 +347,32 @@ local function mario_update(m)
             m.health = 0xff
         end
 
-        if m.health <= 0xff then
-            if network_player_connected_count() > 1 then
+        gLevels[get_level_index()].time = gLevels[get_level_index()].time + 1
+        if m.health <= 0xFF then
+            if network_player_connected_count() > 1 and m.action ~= ACT_SPECTATOR then
                 m.area.camera.cutscene = 0
                 set_mario_spectator(m)
             end
         else
-            gLevels[get_level_index()].time = gLevels[get_level_index()].time + 1
+            -- Export Camera Settings
+            if not gPlayerSyncTable[0].finished and m.health > 0xFF then
+                network_send(true, {
+                    playerIndex = network_global_index_from_local(0),
+                    playerHeight = m.pos.y,
+                    health = m.health,
+                    posX = gLakituState.pos.x,
+                    posY = gLakituState.pos.y,
+                    posZ = gLakituState.pos.z,
+                    focusX = gLakituState.focus.x,
+                    focusY = gLakituState.focus.y,
+                    focusZ = gLakituState.focus.z,
+                    yaw = gLakituState.yaw,
+                    posHSpeed = gLakituState.posHSpeed,
+                    posVSpeed = gLakituState.posVSpeed,
+                    focHSpeed = gLakituState.focHSpeed,
+                    focVSpeed = gLakituState.focVSpeed,
+                })
+            end
         end
     end
 end
@@ -631,14 +660,14 @@ local function on_scoreboard_command()
 end
 
 local function on_hardmode_command(msg)
-	if enable_hardmode == false then
+    enable_hardmode = not enable_hardmode
+	if enable_hardmode then
 		djui_popup_create("Flood: \n\\#A02200\\Hardmode Enabled", 1)
         gGlobalSyncTable.speedMultiplier = 2
-	elseif enable_hardmode == true then
+	else
 		djui_popup_create("Flood: \n\\#00C7FF\\Hardmode Disabled", 1)
         gGlobalSyncTable.speedMultiplier = 1
 	end
-	enable_hardmode = not enable_hardmode
     return true
 end
 
@@ -690,7 +719,7 @@ hook_event(HOOK_ON_LEVEL_INIT, on_level_init)
 hook_event(HOOK_ON_WARP, on_warp)
 hook_event(HOOK_ON_PLAYER_CONNECTED, on_player_connected)
 
-if network_is_server() then
+if network_is_server() or network_is_moderator() then
     hook_chat_command("flood", "\\#00ffff\\[start|speed|ttc-speed|speedrun|scoreboard|hardmode]", on_flood_command)
 end
 

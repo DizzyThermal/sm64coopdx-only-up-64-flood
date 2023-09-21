@@ -97,14 +97,14 @@ local function flood_load_only_up_64_levels()
     LEVEL_LOBBY = LEVEL_ONLY_UP_64
 
     --                 bonus  level             name  goal position                                      speed area type         custom start pos
-    flood_define_level(false, LEVEL_ONLY_UP_64, "a1", { x =   1325, y = 16779, z =   906, a = -0x4000 }, 3.0,  1,   FLOOD_WATER, { x =  5706, y = -16258, z = -5594, a = -0x2000 })
-    flood_define_level(false, LEVEL_ONLY_UP_64, "a2", { x =  -6218, y = 14823, z = -1013, a =  0x8000 }, 3.5,  2,   FLOOD_WATER, { x =  2880, y = -14956, z =  -638, a =  0x8000 })
-    flood_define_level(false, LEVEL_ONLY_UP_64, "a3", { x =  -5556, y = 15917, z =  3092, a =  0x0000 }, 4.5,  3,   FLOOD_WATER, { x = -5688, y = -16270, z =  1033, a =  0x0000 })
-    flood_define_level(false, LEVEL_ONLY_UP_64, "a4", { x =  -5571, y = 15929, z = -3995, a =  0x4000 }, 4.0,  4,   FLOOD_WATER, { x = -4636, y = -15199, z =  1803, a =  0x6000 })
-    flood_define_level(false, LEVEL_ONLY_UP_64, "a5", { x =   1945, y = 16042, z = -4701, a =  0x4000 }, 4.0,  5,   FLOOD_WATER, { x = -4448, y = -15153, z = -2662, a =  0x4000 })
-    flood_define_level(false, LEVEL_ONLY_UP_64, "a6", { x =  -2966, y = 14527, z = -4003, a =  0x0000 }, 4.0,  6,   FLOOD_WATER, { x = -2698, y = -14000, z = -5864, a = -0x4000 })
-    flood_define_level(false, LEVEL_ONLY_UP_64, "a7", { x =   2103, y = 15664, z =  5906, a =  0x8000 }, 5.0,  7,   FLOOD_WATER, { x = -2203, y = -15510, z = -4705, a =  0x0000 })
-    flood_define_level(false, LEVEL_ONLY_UP_64, "a8", { x =  -2085, y = 13304, z = -1303, a =  0x0000 }, 5.0,  0,   FLOOD_WATER, { x =  2132, y = -16336, z =  5847, a = -0x4000 })
+    flood_define_level(false, LEVEL_ONLY_UP_64, "a1", { x =   1325, y = 16779, z =   906, a = -0x4000 }, 3.0,  1,   FLOOD_WATER, { x =  5706, y = -16256, z = -5594, a = -0x2000 })
+    flood_define_level(false, LEVEL_ONLY_UP_64, "a2", { x =  -6218, y = 14823, z = -1013, a =  0x8000 }, 3.5,  2,   FLOOD_WATER, { x =  2880, y = -14954, z =  -638, a =  0x8000 })
+    flood_define_level(false, LEVEL_ONLY_UP_64, "a3", { x =  -5556, y = 15917, z =  3092, a =  0x0000 }, 4.5,  3,   FLOOD_WATER, { x = -5688, y = -16268, z =  1033, a =  0x0000 })
+    flood_define_level(false, LEVEL_ONLY_UP_64, "a4", { x =  -5571, y = 15929, z = -3995, a =  0x4000 }, 4.0,  4,   FLOOD_WATER, { x = -4636, y = -15197, z =  1803, a =  0x6000 })
+    flood_define_level(false, LEVEL_ONLY_UP_64, "a5", { x =   1945, y = 16042, z = -4701, a =  0x4000 }, 4.0,  5,   FLOOD_WATER, { x = -4448, y = -15151, z = -2662, a =  0x4000 })
+    flood_define_level(false, LEVEL_ONLY_UP_64, "a6", { x =  -2966, y = 14527, z = -4003, a =  0x0000 }, 4.0,  6,   FLOOD_WATER, { x = -2698, y = -13998, z = -5864, a = -0x4000 })
+    flood_define_level(false, LEVEL_ONLY_UP_64, "a7", { x =   2103, y = 15664, z =  5906, a =  0x8000 }, 5.0,  7,   FLOOD_WATER, { x = -2203, y = -15508, z = -4705, a =  0x0000 })
+    flood_define_level(false, LEVEL_ONLY_UP_64, "a8", { x =  -2085, y = 13304, z = -1303, a =  0x0000 }, 5.0,  0,   FLOOD_WATER, { x =  2132, y = -16334, z =  5847, a = -0x4000 })
 end
 
 -- load romhack levels
