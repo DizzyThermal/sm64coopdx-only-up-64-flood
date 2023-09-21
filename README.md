@@ -22,6 +22,10 @@ https://github.com/Agent-11/agent-ex-coop-mods/tree/main/mods/flood
 
 > `/flood speed` - Set the speed multiplier manually
 
+## Changes
+
+* Free-Cam Spectate -> Auto-Spectate
+
 ## Known Issues
 
 * Sometimes the timer gets stuck at 0.0 and the server might need to be reset. Sometimes running start with a selected area fixes it.
