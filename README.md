@@ -1,6 +1,6 @@
-# Only Up 64 Flood Mod (sm64ex-coop)
+# Only Up 64 Flood Mod (sm64coopdx)
 
-* Note: This is NOT the [Only Up 64 Map](https://github.com/DizzyThermal/sm64ex-coop-only-up-64), this is Flood Mod for Only Up 64
+* Note: This is NOT the [Only Up 64 Map](https://github.com/DizzyThermal/sm64coopdx-only-up-64), this is Flood Mod for Only Up 64
 
 [Areas 1-8 on **Hard Mode**](https://www.twitch.tv/collections/97Z5GvWhhBf8sg)
 
@@ -12,7 +12,7 @@
 
 [![Only Up 64 Flood](https://img.youtube.com/vi/hP6ghR_GRwo/0.jpg)](https://www.youtube.com/watch?v=hP6ghR_GRwo)
 
-https://github.com/Agent-11/agent-ex-coop-mods/tree/main/mods/flood
+https://github.com/AgentXLP/coopdx-mods/tree/main/mods/flood
 
 ## Chat Commands
 
