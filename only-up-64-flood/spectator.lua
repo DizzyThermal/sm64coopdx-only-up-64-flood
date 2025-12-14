@@ -8,26 +8,14 @@ for i = 0, MAX_PLAYERS - 1 do
     lLakituStates[i] = {
         playerHeight = -0x8000,
         health = 0,
-        pos = {
-            x = 0,
-            y = 0,
-            z = 0,
-        },
-        focus = {
-            x = 0,
-            y = 0,
-            z = 0,
-        },
+        pos = { x = 0, y = 0, z = 0, },
+        focus = { x = 0, y = 0, z = 0, },
         yaw = 0,
         posHSpeed = 0,
         posVSpeed = 0,
         focHSpeed = 0,
         focVSpeed = 0,
     }
-end
-
-local function get_level_index()
-    return if_then_else(game ~= GAME_ONLY_UP_64, gGlobalSyncTable.level, gGlobalSyncTable.area)
 end
 
 -- localize functions to improve performance - spectator.lua
@@ -53,7 +41,7 @@ end
 
 --- @param m MarioState
 local function update_fp_camera(m)
-    if m.playerIndex ~= 0 then return end
+    if m.playerIndex ~= 0 or currCameraIndex == 0 then return end
 
     vec3f_copy(gLakituState.pos, lLakituStates[currCameraIndex].pos)
     vec3f_copy(gLakituState.focus, lLakituStates[currCameraIndex].focus)
@@ -62,11 +50,6 @@ local function update_fp_camera(m)
     gLakituState.posVSpeed = lLakituStates[currCameraIndex].posVSpeed
     gLakituState.focHSpeed = lLakituStates[currCameraIndex].focHSpeed
     gLakituState.focVSpeed = lLakituStates[currCameraIndex].focVSpeed
-
-    print("currCameraIndex: " .. currCameraIndex)
-    print("lLakituStates[currCameraIndex].pos.x: " .. lLakituStates[currCameraIndex].pos.x)
-    print("lLakituStates[currCameraIndex].playerHeight: " .. lLakituStates[currCameraIndex].playerHeight)
-    print("lLakituStates[currCameraIndex].health: " .. lLakituStates[currCameraIndex].health)
 end
 
 --- @param m MarioState
@@ -83,7 +66,6 @@ function set_mario_spectator(m)
     end
 
     currCameraIndex = highestPlayerIndex
-    print("Spectator mode set")
 end
 
 local function player_trackable(i)
@@ -119,7 +101,7 @@ local function act_spectator(m)
 
     if gPlayerSyncTable[m.playerIndex].finished then
         m.marioObj.header.gfx.node.flags = m.marioObj.header.gfx.node.flags & ~GRAPH_RENDER_ACTIVE
-        local goalPos = gLevels[get_level_index()].goalPos
+        local goalPos = gLevels[gGlobalSyncTable.area].goalPos
         vec3f_set(m.pos, goalPos.x, goalPos.y + 600, goalPos.z)
         mario_set_full_health(m)
     else
@@ -167,7 +149,7 @@ local function update_hud()
 
         -- Draw Player Name
         djui_hud_set_font(FONT_TINY)
-        local spectatorText = "[A] " .. string_without_hex(gNetworkPlayers[currCameraIndex].name)
+        local spectatorText = string_without_hex(gNetworkPlayers[currCameraIndex].name) .. " [A]"
         local scale = 1
         local width = djui_hud_measure_text(spectatorText) * scale
         local height = 16 * scale

@@ -18,9 +18,19 @@ https://github.com/AgentXLP/coopdx-mods/tree/main/mods/flood
 
 > `/flood start [area] (a1-a8)` - Start the round (optional: provide area)
 
+> `/flood speed` - Set the speed multiplier manually
+
 > `/flood hardmode` - Doubles the speed multiplier for all areas
 
-> `/flood speed` - Set the speed multiplier manually
+> `/flood type [type]` - Sets the flood type (water, lava, sand, mud, random)
+
+> `/flood reset-all-points` - Resets the scoreboard (all points)
+
+> `/flood set-points [player-id] [points]` - Sets a specified players points
+
+> `/flood-scoreboard` - Toggles the flood scoreboard
+
+> `/flood-height-meter` - Toggles the flood height meter
 
 ## Changes
 
