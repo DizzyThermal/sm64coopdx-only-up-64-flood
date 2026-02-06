@@ -12,7 +12,7 @@
 
 [![Only Up 64 Flood](https://img.youtube.com/vi/hP6ghR_GRwo/0.jpg)](https://www.youtube.com/watch?v=hP6ghR_GRwo)
 
-https://github.com/AgentXLP/coopdx-mods/tree/main/mods/flood
+https://github.com/AgentXLP/coopdx-mods/tree/main/mods/archived/flood
 
 ## Chat Commands
 
