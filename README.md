@@ -30,17 +30,16 @@ https://github.com/AgentXLP/coopdx-mods/tree/main/mods/archived/flood
 
 > `/flood-scoreboard` - Toggles the flood scoreboard
 
-> `/flood-height-meter` - Toggles the flood height meter
-
 ## Changes
 
 * Free-Cam Spectate -> Auto-Spectate
 
 ## Known Issues
 
-* Sometimes the timer gets stuck at 0.0 and the server might need to be reset. Sometimes running start with a selected area fixes it.
+* Final player spectates nothing on completion
+* New players may not warp to lobby
 
 ## Credits
 
-* Agent X (Flood Mod v2.4)
+* Agent X (Flood Mod v2.4) for original mod and permission to work on Flood for Only Up 64
 * All the testers helping me fix bugs and find good speeds for all the areas

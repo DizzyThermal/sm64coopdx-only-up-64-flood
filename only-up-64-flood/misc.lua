@@ -1,14 +1,10 @@
-if unsupported then return end
-
-E_MODEL_FLOOD = smlua_model_util_get_id("flood_geo")
-
 -- localize functions to improve performance
 local set_environment_region,set_override_far,cur_obj_scale,cur_obj_init_animation,bhv_pole_base_loop,nearest_mario_state_to_object,play_mario_jump_sound,set_mario_action,spawn_non_sync_object,mario_set_forward_vel,vec3f_set,load_object_collision_model,obj_mark_for_deletion,network_is_server,obj_check_hitbox_overlap,obj_has_behavior_id,math_random = set_environment_region,set_override_far,cur_obj_scale,cur_obj_init_animation,bhv_pole_base_loop,nearest_mario_state_to_object,play_mario_jump_sound,set_mario_action,spawn_non_sync_object,mario_set_forward_vel,vec3f_set,load_object_collision_model,obj_mark_for_deletion,network_is_server,obj_check_hitbox_overlap,obj_has_behavior_id,math.random
 
 --- @param o Object
 local function bhv_water_init(o)
     o.oFlags = OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE
-    o.oAnimState = gGlobalSyncTable.waterType
+    o.oAnimState = gGlobalSyncTable.water_type
 
     o.header.gfx.skipInViewCheck = true
 
@@ -17,8 +13,8 @@ local function bhv_water_init(o)
 end
 --- @param o Object
 local function bhv_water_loop(o)
-    o.oPosY = gGlobalSyncTable.waterLevel
-    set_environment_region(1, -20000)
+    o.oPosY = gGlobalSyncTable.water_level
+    set_environment_region(1, _G.ou64_flood_start_level)
 end
 id_bhvWater = hook_behavior(nil, OBJ_LIST_SURFACE, true, bhv_water_init, bhv_water_loop)
 
@@ -95,18 +91,14 @@ end)
 
 hook_event(HOOK_ON_DEATH, function()
     local m = gMarioStates[0]
-    if m.floor.type == SURFACE_DEATH_PLANE
-      or m.floor.type == SURFACE_VERTICAL_WIND then
+    if m.floor.type == SURFACE_DEATH_PLANE or
+            m.floor.type == SURFACE_VERTICAL_WIND then
         m.health = 0xff
     end
     return false
 end)
 
 hook_event(HOOK_ON_PAUSE_EXIT, function()
-    if network_is_server() then
-        network_send(true, { restart = true })
-        level_restart()
-    end
     return false
 end)
 
@@ -120,9 +112,9 @@ end)
 --- @param o Object
 hook_event(HOOK_ON_OBJECT_UNLOAD, function(o)
     local m = gMarioStates[0]
-    if (o.header.gfx.node.flags & GRAPH_RENDER_INVISIBLE) == 0
-      and obj_has_behavior_id(o, id_bhv1Up) == 1
-      and obj_check_hitbox_overlap(o, m.marioObj) then
+    if (o.header.gfx.node.flags & GRAPH_RENDER_INVISIBLE) == 0 and
+            obj_has_behavior_id(o, id_bhv1Up) == 1 and
+            obj_check_hitbox_overlap(o, m.marioObj) then
         m.healCounter = 31
         m.hurtCounter = 0
     end
