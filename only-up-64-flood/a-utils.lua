@@ -136,3 +136,46 @@ function render_player_head(index, x, y, scaleX, scaleY)
 
     djui_hud_render_texture_tile(HEAD_HUD, x, y, scaleX, scaleY, (#PART_ORDER+1)*16, tileY*16, 16, 16)
 end
+
+function get_player_states()
+    local active_count = 0
+    local dead_count = 0
+    local finished_count = 0
+    local player_count = 0
+    for i = 0, MAX_PLAYERS - 1 do
+        if gNetworkPlayers[i].connected and
+                (gServerSettings.headlessServer == 0 or
+                    i ~= server_local_index) then
+            local m = gMarioStates[i]
+            player_count = player_count + 1
+            if gPlayerSyncTable[i].finished and
+                        m.health > 0xFF then
+                -- Player Finished
+                finished_count = finished_count + 1
+            elseif m.health > 0xFF then
+                -- Player Active
+                active_count = active_count + 1
+            elseif m.health <= 0xFF then
+                -- Player is Dead
+                dead_count = dead_count + 1
+            end
+        end
+    end
+
+    return {
+        active = active_count,
+        dead = dead_count,
+        finished = finished_count,
+        total = player_count,
+    }
+end
+
+function players_all_dead()
+    player_states = get_player_states()
+    return player_states.dead == player_states.total
+end
+
+function players_all_inactive()
+    player_states = get_player_states()
+    return player_states.active == 0
+end
