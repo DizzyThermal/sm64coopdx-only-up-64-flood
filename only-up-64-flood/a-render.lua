@@ -92,7 +92,7 @@ function render_flood_scoreboard()
 
     local anchor_x = 24
     local anchor_y = 24
-    local top_height = _G.ou64_top_height
+    local top_height = ou64_top_height
 
     -- Gather Players
     local server_local_index = network_player_from_global_index(0).localIndex
@@ -156,15 +156,15 @@ function render_flood_scoreboard()
                 if place == 1 then
                     -- 1st - Gold 
                     r, g, b = 255, 217, 0
-                    medal = _G.ou64_gold_medal
+                    medal = ou64_gold_medal
                 elseif place == 2 then
                     -- 2nd - Silver
                     r, g, b = 180, 186, 189
-                    medal = _G.ou64_silver_medal
+                    medal = ou64_silver_medal
                 elseif place == 3 then
                     -- 3rd - Bronze
                     r, g, b = 205, 127, 50
-                    medal = _G.ou64_bronze_medal
+                    medal = ou64_bronze_medal
                 else
                     -- 4th+
                     medal = nil
@@ -197,8 +197,9 @@ function render_flood_scoreboard()
     -- Background Box
     local player_count = players_running ~= nil and #players_running or 0
     local scoreboard_height = 34 * player_count + 42
+    _G.ou64_flood_scoreboard_height = scoreboard_height
     djui_hud_set_adjusted_color(0, 0, 0, 128)
-    djui_hud_render_rect(anchor_x, anchor_y, 430, scoreboard_height)
+    djui_hud_render_rect(anchor_x, anchor_y, 450, scoreboard_height)
 
     -- Flood Scoreboard Title
     djui_hud_set_font(FONT_MENU)
@@ -214,13 +215,15 @@ function render_flood_scoreboard()
         end
         area = string_format("Area %d", area_index)
     end
+    local area_length = djui_hud_measure_text(area) / 1.5
+
 
     djui_hud_set_adjusted_color(250, 255, 32, 255)
-    djui_hud_print_text(scoreboard_title, anchor_x - 8, anchor_y - 20, _G.ou64_run_timer_scale / 1.5)
+    djui_hud_print_text(scoreboard_title, anchor_x - 8, anchor_y - 20, 1 / 1.5)
     djui_hud_set_adjusted_color(0, 131, 255, 255)
-    djui_hud_print_text(scoreboard_subtitle, anchor_x - 8 + title_length, anchor_y - 20, _G.ou64_run_timer_scale / 1.5)
-    djui_hud_set_adjusted_color(255, 255, 255, 255)
-    djui_hud_print_text(string_format(": %s", area), anchor_x - 8 + title_length + subtitle_length, anchor_y - 20, _G.ou64_run_timer_scale / 1.5)
+    djui_hud_print_text(scoreboard_subtitle, anchor_x - 8 + title_length, anchor_y - 20, 1 / 1.5)
+    djui_hud_set_adjusted_color(250, 255, 32, 255)
+    djui_hud_print_text(area, anchor_x + 450 - area_length - 8, anchor_y - 20, 1 / 1.5)
 
     -- Players Running
     djui_hud_set_adjusted_color(255, 255, 255, 255)
@@ -248,8 +251,8 @@ function render_flood_scoreboard()
         local pDone = 0
         if gGlobalSyncTable.round_state == 1 then
             if gPlayerSyncTable[entry.local_index].finished and
-                    gPlayerSyncTable[entry.local_index].finish_time ~= nil then
-                extra_string = extra_string .. " (" .. gPlayerSyncTable[entry.local_index].finish_time .. "s)"
+                    gPlayerSyncTable[entry.local_index].finish_time_str ~= nil then
+                extra_string = extra_string .. " (" .. gPlayerSyncTable[entry.local_index].finish_time_str .. ")"
             elseif gMarioStates[entry.local_index].health > 0xFF then
                 pDone = math_max(entry.percent_done, 0)
                 pDone = math_min(pDone, 100)
@@ -262,11 +265,11 @@ function render_flood_scoreboard()
             local medal_y_pad = 4
             djui_hud_render_texture(entry.medal, anchor_x + medal_x_pad, anchor_y + y_pad + medal_y_pad + y_offset, 0.2, 0.2)
         end
-        local head_x_pad = 6
+        local head_x_pad = 18
         local head_y_pad = 1
         render_player_head(entry.local_index, anchor_x + icon_pad + head_x_pad, anchor_y + y_pad + head_y_pad + y_offset, 1.8, 1.8)
         local points_string = string_format("\\#%02x%02x%02x\\%d pts\\#FFFFFF\\", r, g, b, entry.points)
-        djui_hud_print_colored_text(points_string .. " :  " .. entry_name .. extra_string, anchor_x + x_pad - 4 + icon_pad + head_pad, anchor_y + y_pad + y_offset, 1)
+        djui_hud_print_colored_text(points_string .. " :  " .. entry_name .. extra_string, anchor_x + x_pad + icon_pad + head_pad + head_x_pad, anchor_y + y_pad + y_offset, 1)
         y_offset = y_offset + 34
     end
 end
@@ -283,7 +286,7 @@ function set_player_descriptions(m)
 end
 
 function debug_render_debug_info()
-    if _G.ou64_flood_debug then
+    if ou64_flood_debug then
         djui_hud_set_resolution(RESOLUTION_DJUI)
 
         local debug_box_width = 500
@@ -299,7 +302,7 @@ function debug_render_debug_info()
 
         djui_hud_set_font(FONT_MENU)
         djui_hud_set_adjusted_color(250, 255, 32, 255)
-        djui_hud_print_text("Debug Info", anchor_x - 8, anchor_y - 20, _G.ou64_run_timer_scale / 1.5)
+        djui_hud_print_text("Debug Info", anchor_x - 8, anchor_y - 20, 1 / 1.5)
 
         djui_hud_set_font(FONT_ALIASED)
         djui_hud_set_adjusted_color(255, 255, 255, 255)

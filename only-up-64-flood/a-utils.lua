@@ -1,10 +1,10 @@
 -- Localizing for performance
-local is_player_active,table_insert,is_game_paused,djui_hud_set_color,math_max,math_min = is_player_active,table.insert,is_game_paused,djui_hud_set_color,math.max,math.min
+local djui_hud_set_color,is_game_paused,is_player_active,math_floor,math_max,math_min,string_format,table_insert = djui_hud_set_color,is_game_paused,is_player_active,math.floor,math.max,math.min,string.format,table.insert
 
 -- Set Flood Description Variables (TODO: Do this every round to update description?)
-if _G.ou64_plugin_active and
-        _G.ou64_enable_moveset then
-    _G.ou64_flood_ou64_moveset = true
+if ou64_plugin_active and
+        _G.ou64_plugin_api.settings.enable_moveset then
+    ou64_flood_ou64_moveset = true
 end
 for i in pairs(gActiveMods) do
     if (gActiveMods[i].incompatible ~= nil and
@@ -12,12 +12,12 @@ for i in pairs(gActiveMods) do
             gActiveMods[i].name:find("Squishy's Server") or 
             (gActiveMods[i].name:find("Pasta") and
                 gActiveMods[i].name:find("Castle")) then
-        _G.ou64_flood_moveset = true
+        ou64_flood_moveset = true
     end
     if gActiveMods[i].name:find("Object Spawner") or
             gActiveMods[i].name:find("Noclip") or
             gActiveMods[i].name:find("Cheats") then
-        _G.ou64_flood_cheats = true
+        ou64_flood_cheats = true
     end
 end
 
@@ -73,7 +73,7 @@ end
 
 function split(s)
     local result = {}
-    for match in (s):gmatch(string.format("[^%s]+", " ")) do
+    for match in (s):gmatch(string_format("[^%s]+", " ")) do
         table_insert(result, match)
     end
     return result
@@ -178,4 +178,21 @@ end
 function players_all_inactive()
     player_states = get_player_states()
     return player_states.active == 0
+end
+
+function format_msec(total_msec)
+    local total_seconds = math_floor(total_msec / 1000)
+    local millis = total_msec % 1000
+    local seconds = total_seconds % 60
+    local total_minutes = math_floor(total_seconds / 60)
+    local minutes = total_minutes % 60
+    local hours = math_floor(total_minutes / 60)
+
+    if hours > 0 then
+        return string_format("%d:%02d:%02d.%03d", hours, minutes, seconds, millis)
+    elseif minutes > 0 then
+        return string_format("%d:%02d.%03d", minutes, seconds, millis)
+    else
+        return string_format("%d.%03d", seconds, millis)
+    end
 end

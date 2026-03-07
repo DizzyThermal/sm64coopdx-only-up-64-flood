@@ -14,7 +14,7 @@ end
 --- @param o Object
 local function bhv_water_loop(o)
     o.oPosY = gGlobalSyncTable.water_level
-    set_environment_region(1, _G.ou64_flood_start_level)
+    set_environment_region(1, ou64_flood_start_level)
 end
 id_bhvWater = hook_behavior(nil, OBJ_LIST_SURFACE, true, bhv_water_init, bhv_water_loop)
 
@@ -99,6 +99,10 @@ hook_event(HOOK_ON_DEATH, function()
 end)
 
 hook_event(HOOK_ON_PAUSE_EXIT, function()
+    if network_is_server() then
+        network_send(true, { restart = true })
+        level_restart()
+    end
     return false
 end)
 
@@ -123,3 +127,11 @@ end)
 hook_event(HOOK_ON_PACKET_RECEIVE, function(dataTable)
     if dataTable.restart then level_restart() end
 end)
+
+function bind_level_restart(m)
+    if network_is_server() or
+            network_is_moderator() then
+        return (m.controller.buttonPressed & L_JPAD) ~= 0
+    end
+    return false
+end

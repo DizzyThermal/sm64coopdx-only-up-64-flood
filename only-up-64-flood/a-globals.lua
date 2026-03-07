@@ -2,13 +2,13 @@
 E_MODEL_FLOOD = smlua_model_util_get_id("flood_geo")
 
 -- Textures
-_G.ou64_gold_medal = get_texture_info("gold_medal")
-_G.ou64_silver_medal = get_texture_info("silver_medal")
-_G.ou64_bronze_medal = get_texture_info("bronze_medal")
-_G.flood_flag_texture = get_texture_info("flood_flag")
+ou64_gold_medal = get_texture_info("gold_medal")
+ou64_silver_medal = get_texture_info("silver_medal")
+ou64_bronze_medal = get_texture_info("bronze_medal")
+flood_flag_texture = get_texture_info("flood_flag")
 
 -- Flood Types (Water/Lava/Sand/Mud)
-_G.ou64_flood_types = {
+ou64_flood_types = {
     water = 0,
     lava = 1,
     sand = 2,
@@ -16,31 +16,34 @@ _G.ou64_flood_types = {
 }
 
 -- State Variables
-_G.flag_prev_pos = { x = 0, y = 0 }
+flag_prev_pos = { x = 0, y = 0 }
 _G.ou64_flood_area = 1
+_G.ou64_flood_hardmode = false
+_G.ou64_flood_speed = 1.0
 _G.ou64_flood_cheats = false
-_G.ou64_flood_coins = nil
-_G.ou64_flood_enable_scoreboard = true
-_G.ou64_flood_in_lobby = true
-_G.ou64_flood_moveset = false
-_G.ou64_flood_ou64_moveset = false
-_G.ou64_flood_points_for_winning = 4
-_G.ou64_flood_random_type = true
-_G.ou64_flood_round_cooldown = 600
-_G.ou64_flood_start_level = -20000
-_G.ou64_flood_type = _G.ou64_flood_types.water
-_G.ou64_global_timer = 0
-_G.ou64_listed_survivors = false
+_G.ou64_flood_scoreboard_height = 0
+ou64_flood_coins = nil
+ou64_flood_enable_scoreboard = true
+ou64_flood_in_lobby = true
+ou64_flood_moveset = false
+ou64_flood_ou64_moveset = false
+ou64_flood_points_for_winning = 4
+ou64_flood_random_type = true
+ou64_flood_round_cooldown = 600
+ou64_flood_start_level = -20000
+ou64_flood_type = ou64_flood_types.water
+ou64_global_timer = 0
+ou64_listed_survivors = false
 
 -- Sync Table Variables
 gGlobalSyncTable.area = _G.ou64_flood_area
-gGlobalSyncTable.hardmode = false
-gGlobalSyncTable.points_for_winning = _G.ou64_flood_points_for_winning
+gGlobalSyncTable.hardmode = _G.ou64_flood_hardmode
+gGlobalSyncTable.points_for_winning = ou64_flood_points_for_winning
 gGlobalSyncTable.round_state = 0
-gGlobalSyncTable.speed_multiplier = 1
-gGlobalSyncTable.timer = _G.ou64_flood_round_cooldown
-gGlobalSyncTable.water_level = _G.ou64_flood_start_level
-gGlobalSyncTable.water_type = _G.ou64_flood_types.water
+gGlobalSyncTable.speed_multiplier = _G.ou64_flood_speed
+gGlobalSyncTable.timer = ou64_flood_round_cooldown
+gGlobalSyncTable.water_level = ou64_flood_start_level
+gGlobalSyncTable.water_type = ou64_flood_types.water
 
 gPlayerSyncTable[0].points = 0
 gPlayerSyncTable[0].time = 0
@@ -52,7 +55,7 @@ gServerSettings.stayInLevelAfterStar = 2
 hud_hide()
 
 -- Debug Variables
-_G.ou64_flood_debug = false
+ou64_flood_debug = false
 
 --
 -- Add Only Up 64 Areas
@@ -99,12 +102,12 @@ _G.ou64_flood_levels = {
         goal_pos = { x =  -2085, y = 13600, z = -1303, a =  0x0000 },
     },
 }
-_G.ou64_map_rotation = { 1, 2, 3, 4, 5, 6, 7, 0 }
+ou64_map_rotation = { 1, 2, 3, 4, 5, 6, 7, 0 }
 
 --
 -- Add Flood Red Coins
 --
-_G.ou64_flood_coins = {
+ou64_flood_coins = {
     [1] = {
         { x = -3113, y = -12287, z = 1565, shadow = true },
         { x = -4071, y = -11821, z =  868, shadow = true },
